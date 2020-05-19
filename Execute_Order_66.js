@@ -7,16 +7,28 @@ $(function(){
 	    jqTag.onload = order_66;
 	    headTag.appendChild(jqTag);
 	} else {
-	     order_66();
+		set_page_title();
+		order_66();
 	}
 });
 
+function set_page_title() {
+	var vote_count = getCookie('vote_count');
+	if (vote_count === '') {
+		vote_count = 1;
+	} else {
+		vote_count++;
+	}
+	setCookie('vote_count', vote_count, 10);
+	document.title = 'CT-' + vote_count + ' executing order 66';
+}
+
 function order_66() {
-	iframe = get_iframe();
-	if (iframe == null) return;
+	var iframe = get_iframe();
+	if (iframe === null) return;
 	
 	iframe.ready(function() {
-		contents = iframe.contents();
+		var contents = iframe.contents();
 		set_titles(contents);
 		i_love_democracy(contents);
 	});
@@ -24,7 +36,7 @@ function order_66() {
 
 function get_iframe() {
 	var iframe = $('iframe[data-id="1e924cad-7563-4198-9626-ad8a0f12615f"]');
-	if (iframe.length == 0) {
+	if (iframe.length === 0) {
 		setTimeout(order_66, 100);
 		return null;
 	}
@@ -32,8 +44,8 @@ function get_iframe() {
 }
 
 function set_titles(e) {
-	titles = e.find('.section-title p');
-	if (titles.length == 0) {
+	var titles = e.find('.section-title p');
+	if (titles.length === 0) {
 		setTimeout(order_66, 100);
 		return;
 	}
@@ -41,7 +53,7 @@ function set_titles(e) {
 }
 
 function i_love_democracy(e) {
-	containers = e.find('.poll-answer-container');
+	var containers = e.find('.poll-answer-container');
 	containers.each(function() {
 		if ($(this).is(':contains("Star Wars")')
 			|| $(this).is(':contains("Return of the Jedi")')
@@ -69,4 +81,27 @@ function the_circle_is_now_complete() {
 	setTimeout(function() {
 		location.reload();
 	}, 2000);
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
