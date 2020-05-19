@@ -1,16 +1,20 @@
-$(function(){
-	if(typeof jQuery=='undefined') {
-			var headTag = document.getElementsByTagName("head")[0];
-			var jqTag = document.createElement('script');
-			jqTag.type = 'text/javascript';
-			jqTag.src = '//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js';
-			jqTag.onload = order_66;
-			headTag.appendChild(jqTag);
-	} else {
+if(typeof jQuery=='undefined') {
+		var headTag = document.getElementsByTagName("head")[0];
+		var jqTag = document.createElement('script');
+		jqTag.type = 'text/javascript';
+		jqTag.src = '//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+		jqTag.onload = execute;
+		headTag.appendChild(jqTag);
+} else {
+	execute()
+}
+
+function execute() {
+	$(function() {
 		show_vote_stats();
 		order_66();
-	}
-});
+	});
+}
 
 function twenty_thousand_clones() {
 	$.ajax({
