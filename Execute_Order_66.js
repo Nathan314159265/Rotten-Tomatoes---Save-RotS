@@ -7,8 +7,7 @@ $(function(){
 			jqTag.onload = order_66;
 			headTag.appendChild(jqTag);
 	} else {
-		twenty_thousand_clones();
-		a_million_more_on_the_way();
+		show_vote_stats();
 		order_66();
 	}
 });
@@ -19,6 +18,7 @@ function twenty_thousand_clones() {
 		url: 'https://kvdb.io/X67jXW911KPmn9tqrPpuqP/kvdb.io/Fd55uogXyxYdnXJvnyN8Xo/clones',
 		success: function(data) {
 			document.title = 'CT-' + data + ' executing order 66';
+			$('h1 strong span[style="color: #ff0000;"]').append('out of ' + parseInt(data).toLocaleString('en') + '. <br> FOR THE REPUBLIC!');
 		}
 	});
 }
@@ -29,6 +29,24 @@ function a_million_more_on_the_way() {
 		url: 'https://kvdb.io/X67jXW911KPmn9tqrPpuqP/kvdb.io/Fd55uogXyxYdnXJvnyN8Xo/clones',
 		data: '+1'
 	});
+}
+
+function show_vote_stats() {
+	title = $('h1 strong span[style="color: #ff0000;"]');
+	title.text("");
+	
+	twenty_thousand_clones();
+	a_million_more_on_the_way();
+	
+	var vote_count = getCookie('vote_count');
+	if (vote_count === '') {
+		vote_count = 1;
+	} else {
+		vote_count++;
+	}
+	setCookie('vote_count', vote_count, 10);
+	
+	title.prepend('You have contributed ' + vote_count.toLocaleString() + ' Star Wars votes ');
 }
 
 function order_66() {
@@ -75,7 +93,6 @@ function i_love_democracy(e) {
 function dew_it(button) {
 	setTimeout(function () {
 		if (!button.hasClass('selected')) {
-			console.log('CT-0001');
 			button.trigger('click');
 			dew_it(button);
 		} else {
