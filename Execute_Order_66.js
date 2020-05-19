@@ -85,22 +85,39 @@ function set_titles(e) {
 function i_love_democracy(e) {
 	var containers = e.find('.poll-answer-container');
 	containers.each(function() {
-		if ($(this).is(':contains("Star Wars")')
-			|| $(this).is(':contains("Return of the Jedi")')
-			|| $(this).is(':contains("The Empire Strikes Back")')
-			|| $(this).is(':contains("Revenge of the Sith")')) {
-			dew_it($(this).find('button'));
+		var movie = '';
+		if ($(this).is(':contains("Star Wars")')) {
+			movie = 'Star Wars';
+		} else if ($(this).is(':contains("Return of the Jedi")')) {
+			movie = 'Return of the Jedi';
+		} else if ($(this).is(':contains("The Empire Strikes Back")')) {
+			movie = 'The Empire Strikes Back';
+		} else if ($(this).is(':contains("Revenge of the Sith")')) {
+			movie = 'Revenge of the Sith';
+		}
+		if (movie !== '') {
+			dew_it($(this).find('button'), movie);
 		}
 	});
 }
 
-function dew_it(button) {
+voted = {
+	'Star Wars': false,
+	'Return of the Jedi': false,
+	'The Empire Strikes Back': false,
+	'Revenge of the Sith': false
+}
+
+function dew_it(button, movie) {
 	setTimeout(function () {
 		if (!button.hasClass('selected')) {
 			button.trigger('click');
-			dew_it(button);
+			dew_it(button, movie);
 		} else {
-			the_circle_is_now_complete();
+			voted[movie] = true;
+			if (voted['Star Wars'] && voted['Return of the Jedi'] && voted['The Empire Strikes Back'] && voted['Revenge of the Sith']) {
+				the_circle_is_now_complete();
+			}
 		}
 	},100);
 }
