@@ -1,5 +1,14 @@
 $(function(){
-	order_66();
+	if(typeof jQuery=='undefined') {
+	    var headTag = document.getElementsByTagName("head")[0];
+	    var jqTag = document.createElement('script');
+	    jqTag.type = 'text/javascript';
+	    jqTag.src = '//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+	    jqTag.onload = order_66;
+	    headTag.appendChild(jqTag);
+	} else {
+	     order_66();
+	}
 });
 
 function order_66() {
