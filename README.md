@@ -22,7 +22,7 @@ Instructions to join the efforts:
 
 ⁠At the top, where it shows the website that the script will run on, put the link to the voting site (https://editorial.rottentomatoes.com/article/summer-movie-showdown/).
 
-⁠Go to my script (https://gist.github.com/abrahammurciano/1e9f608d2b47c7f5700bc23a28477e4b) and copy all the code.
+⁠Go to my script (the javascript file) and copy all the code.
 
 ⁠Paste it into the JavaScript section of the extension (the left panel, where it says JS or JavaScript).
 
